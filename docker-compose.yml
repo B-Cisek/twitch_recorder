@@ -4,9 +4,6 @@ services:
       context: ./.docker/php
       dockerfile: Dockerfile
       target: dev
-      args:
-        USER_ID: ${UID:-1000}
-        GROUP_ID: ${GID:-1000}
     container_name: twitch_recorder_php
     volumes:
       - ./api:/var/www/html

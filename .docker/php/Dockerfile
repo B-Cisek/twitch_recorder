@@ -31,10 +31,8 @@ COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 FROM base AS dev 
 COPY php.ini /usr/local/etc/php/conf.d/php.ini
 COPY xdebug.ini /usr/local/etc/php/conf.d/xdebug.ini
-
-RUN echo "Changing www-data UID to $USER_ID and GID to $GROUP_ID" \
-    && if [ -z "$(getent group $GROUP_ID)" ]; then addgroup -g $GROUP_ID www-data; else groupmod -g $GROUP_ID $(getent group $GROUP_ID | cut -d: -f1); fi \
-    && usermod -u $USER_ID -g $GROUP_ID www-data
+RUN usermod -u 1000 www-data
+USER www-data
 
 FROM base AS prod
 COPY php-prod.ini /usr/local/etc/php/conf.d/php.ini
