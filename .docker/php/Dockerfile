@@ -1,4 +1,4 @@
-FROM php:8.4-fpm-alpine as base
+FROM php:8.4-fpm-alpine AS base
 
 WORKDIR /var/www/html
 
@@ -25,11 +25,13 @@ RUN apk add --virtual .build-deps ${PHPIZE_DEPS} \
 
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
-FROM base as dev 
+FROM base AS dev 
+
 COPY php.ini /usr/local/etc/php/conf.d/php.ini
 COPY xdebug.ini /usr/local/etc/php/conf.d/xdebug.ini
 RUN usermod -u 1000 www-data
 
-FROM base as prod
+FROM base AS prod
+
 COPY php-prod.ini /usr/local/etc/php/conf.d/php.ini
 USER www-data
