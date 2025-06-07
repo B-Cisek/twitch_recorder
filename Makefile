@@ -14,3 +14,6 @@ bash:
 
 composer:
 	docker-compose exec php composer $(filter-out $@,$(MAKECMDGOALS))
+
+phpstan:
+	docker-compose exec php vendor/bin/phpstan analyse
