@@ -22,13 +22,13 @@ doctrine:
                 type: attribute
                 is_bundle: false
                 dir: '%kernel.project_dir%/src/Data/Entity'
-                prefix: 'Data\Entity'
+                prefix: 'App\Data\Entity'
                 alias: App
             Embeddable:
                 is_bundle: false
                 type: attribute
                 dir: '%kernel.project_dir%/src/Data/Embeddable'
-                prefix: 'InnovationSoftware\Data\Embeddable'
+                prefix: 'App\Data\Embeddable'
                 alias: Embeddable
         controller_resolver:
             auto_mapping: false
