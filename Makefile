@@ -1,4 +1,4 @@
-.PHONY: up down build composer
+.PHONY: up down build bash composer
 
 up:
 	docker-compose up -d
@@ -8,6 +8,9 @@ down:
 
 build:
 	docker-compose build
+
+bash:
+	docker exec -it twitch_recorder_php bash
 
 composer:
 	docker-compose exec php composer $(filter-out $@,$(MAKECMDGOALS))
