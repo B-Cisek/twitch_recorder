@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace App\Data\Entity;
 
-use App\Application\Channel\Repository\ChannelRepository;
+use App\Application\Channel\Repository\Repository;
 use App\Data\Enum\Platform;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: ChannelRepository::class)]
+#[ORM\Entity(repositoryClass: Repository::class)]
 class Channel extends BaseEntity
 {
     #[ORM\Column(type: Types::STRING, length: 255, unique: true)]
