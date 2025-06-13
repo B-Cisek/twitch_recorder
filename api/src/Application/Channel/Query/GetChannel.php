@@ -8,7 +8,7 @@ use App\Application\Channel\Query\Result\Channel;
 use App\Data\Entity\Channel as ChannelEntity;
 use Doctrine\ORM\EntityManagerInterface;
 
-final readonly class GetChannel
+readonly class GetChannel
 {
     public function __construct(private EntityManagerInterface $entityManager)
     {
@@ -16,18 +16,16 @@ final readonly class GetChannel
 
     public function execute(string $id): ?Channel
     {
-        $qb = $this->entityManager->createQueryBuilder();
-
-        $qb
+        /** @var ChannelEntity|null $result */
+        $result = $this->entityManager->createQueryBuilder()
             ->select('c')
             ->from(ChannelEntity::class, 'c')
             ->where('c.id = :id')
-            ->setParameter('id', $id);
+            ->setParameter('id', $id)
+            ->getQuery()
+            ->getOneOrNullResult();
 
-        /** @var ChannelEntity $result */
-        $result = $qb->getQuery()->getOneOrNullResult();
-
-        if (null === $result) {
+        if (!$result instanceof ChannelEntity) {
             return null;
         }
 

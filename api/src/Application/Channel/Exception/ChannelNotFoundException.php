@@ -8,5 +8,6 @@ use App\Infrastructure\Exception\NotFoundException;
 
 class ChannelNotFoundException extends NotFoundException
 {
+    /** @var string */
     protected $message = 'Channel not found';
 }

@@ -8,7 +8,7 @@ use App\Data\Entity\Channel;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Query;
 
-final readonly class GetChannels
+readonly class GetChannels
 {
     public function __construct(private EntityManagerInterface $entityManager)
     {
@@ -16,12 +16,10 @@ final readonly class GetChannels
 
     public function execute(): Query
     {
-        $qb = $this->entityManager->createQueryBuilder();
-
-        $qb
+        return $this->entityManager
+            ->createQueryBuilder()
             ->select('c')
-            ->from(Channel::class, 'c');
-
-        return $qb->getQuery();
+            ->from(Channel::class, 'c')
+            ->getQuery();
     }
 }

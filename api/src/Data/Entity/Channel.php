@@ -6,6 +6,8 @@ namespace App\Data\Entity;
 
 use App\Application\Channel\Repository\Repository;
 use App\Data\Enum\Platform;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -26,6 +28,16 @@ class Channel extends BaseEntity
 
     #[ORM\Column(type: Types::DATETIME_IMMUTABLE, nullable: true)]
     private ?\DateTimeImmutable $endAt = null;
+
+    /** @var Collection<int, Recording> */
+    #[ORM\OneToMany(targetEntity: Recording::class, mappedBy: 'channel')]
+    private Collection $recordings;
+
+    public function __construct()
+    {
+        parent::__construct();
+        $this->recordings = new ArrayCollection();
+    }
 
     public function getName(): string
     {
@@ -79,6 +91,22 @@ class Channel extends BaseEntity
     public function setEndAt(?\DateTimeImmutable $endAt): Channel
     {
         $this->endAt = $endAt;
+        return $this;
+    }
+
+    /** @return Collection<int, Recording> */
+    public function getRecordings(): Collection
+    {
+        return $this->recordings;
+    }
+
+    public function addRecording(Recording $recording): static
+    {
+        if (!$this->recordings->contains($recording)) {
+            $this->recordings->add($recording);
+            $recording->setChannel($this);
+        }
+
         return $this;
     }
 }

@@ -8,7 +8,7 @@ use App\Application\Channel\Provider\ChannelProvider;
 use App\Application\Channel\Repository\Repository;
 use Psr\Log\LoggerInterface;
 
-final readonly class UpdateChannelHandler
+readonly class UpdateChannelHandler
 {
     public function __construct(
         private Repository $channelRepository,

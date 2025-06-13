@@ -15,7 +15,7 @@ use Symfony\Component\Validator\Constraints as Assert;
     message: 'A channel with this name already exists.',
     entityClass: Channel::class
 )]
-final readonly class UpdateChannel
+readonly class UpdateChannel
 {
     public function __construct(
         #[Assert\Length(min: 3, max: 255)]

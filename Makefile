@@ -17,3 +17,6 @@ composer:
 
 phpstan:
 	docker-compose exec php vendor/bin/phpstan analyse
+
+test:
+	docker-compose exec php vendor/bin/phpunit tests

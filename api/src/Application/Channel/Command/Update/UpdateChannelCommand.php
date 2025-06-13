@@ -6,7 +6,7 @@ namespace App\Application\Channel\Command\Update;
 
 use App\Data\Enum\Platform;
 
-final readonly class UpdateChannelCommand
+readonly class UpdateChannelCommand
 {
     public function __construct(
         public string $id,

@@ -8,7 +8,7 @@ use App\Application\Channel\Exception\ChannelNotFoundException;
 use App\Application\Channel\Repository\QueryRepository;
 use App\Data\Entity\Channel;
 
-final readonly class ChannelProvider
+readonly class ChannelProvider
 {
     public function __construct(private QueryRepository $queryRepository)
     {

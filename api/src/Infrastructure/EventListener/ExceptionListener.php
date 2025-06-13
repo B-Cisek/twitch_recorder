@@ -17,7 +17,7 @@ use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 #[AsEventListener(event: 'kernel.exception')]
-final readonly class ExceptionListener
+readonly class ExceptionListener
 {
     public function __construct(
         #[Autowire('%kernel.environment%')]
