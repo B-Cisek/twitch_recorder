@@ -29,7 +29,7 @@ class Recording extends BaseEntity
     #[ORM\Column(type: Types::STRING, nullable: true)]
     private ?string $filePath = null;
 
-    public function getChannelId(): Channel
+    public function getChannel(): Channel
     {
         return $this->channel;
     }
