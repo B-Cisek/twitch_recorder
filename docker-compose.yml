@@ -42,6 +42,17 @@ services:
     volumes:
       - redis_data:/data
 
+  rabbitmq:
+    image: rabbitmq:3.11-management-alpine
+    container_name: twitch_recorder_rabbitmq
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq
+      - ".docker/rabbitmq/user.conf:/etc/rabbitmq/conf.d/user.conf:z"
+
 volumes:
   postgres_data:
   redis_data:
+  rabbitmq_data:
