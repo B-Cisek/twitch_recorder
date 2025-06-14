@@ -18,7 +18,7 @@ readonly class StopRecordingCommandHandler
 
     public function handle(StopRecordingCommand $command): void
     {
-        $recording = $this->provider->loadChannel($command->recordingId);
+        $recording = $this->provider->loadRecording($command->recordingId);
 
         $this->messageBus->dispatch(new StopRecording($recording->getId()->toRfc4122()));
     }
