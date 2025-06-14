@@ -13,8 +13,7 @@ readonly class StopRecordingCommandHandler
     public function __construct(
         private RecordingProvider $provider,
         private MessageBusInterface $messageBus,
-    )
-    {
+    ) {
     }
 
     public function handle(StopRecordingCommand $command): void

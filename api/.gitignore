@@ -1,4 +1,3 @@
-
 ###> symfony/framework-bundle ###
 /.env.local
 /.env.local.php
@@ -17,3 +16,6 @@
 ###> phpstan/phpstan ###
 phpstan.neon
 ###< phpstan/phpstan ###
+
+tools/vendor
+.php-cs-fixer.cache

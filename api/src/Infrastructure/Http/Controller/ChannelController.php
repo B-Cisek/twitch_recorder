@@ -70,7 +70,7 @@ class ChannelController extends AbstractController
 
         $data = [
             'data' => array_map(
-                fn(Channel $channel) => new ChannelQueryResult(
+                fn (Channel $channel) => new ChannelQueryResult(
                     $channel->getId()->toRfc4122(),
                     $channel->getName(),
                     $channel->getPlatform()->value,

@@ -13,8 +13,7 @@ readonly class CreateChannelHandler
     public function __construct(
         private Repository $channelRepository,
         private LoggerInterface $logger
-    )
-    {
+    ) {
     }
 
     public function handle(CreateChannelCommand $command): void

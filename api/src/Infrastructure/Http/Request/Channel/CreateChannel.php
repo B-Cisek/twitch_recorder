@@ -21,23 +21,18 @@ readonly class CreateChannel
         #[Assert\NotBlank]
         #[Assert\Length(min: 3, max: 255)]
         public string $name,
-
         #[Assert\NotBlank]
         #[Assert\Type(type: Platform::class)]
         public Platform $platform,
-
         #[Assert\Type(type: 'bool')]
         public bool $isActive = false,
-
         #[Assert\Type(\DateTimeImmutable::class)]
         #[Assert\GreaterThanOrEqual('today')]
         public ?\DateTimeImmutable $startAt = null,
-
         #[Assert\Type(\DateTimeImmutable::class)]
         #[Assert\GreaterThan(propertyPath: 'startAt')]
         public ?\DateTimeImmutable $endAt = null,
-    )
-    {
+    ) {
     }
 
     public function toCommand(): CreateChannelCommand

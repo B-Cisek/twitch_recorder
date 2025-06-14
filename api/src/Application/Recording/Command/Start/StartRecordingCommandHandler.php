@@ -17,8 +17,7 @@ readonly class StartRecordingCommandHandler
         private MessageBusInterface $messageBus,
         private Repository $repository,
         private LoggerInterface $logger
-    )
-    {
+    ) {
     }
 
     public function handle(StartRecordingCommand $command): void

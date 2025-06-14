@@ -15,7 +15,6 @@ readonly class StartRecording
         public string $platform,
         public ?string $startAt = null,
         public ?string $endAt = null,
-    )
-    {
+    ) {
     }
 }

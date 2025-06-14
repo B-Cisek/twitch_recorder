@@ -13,7 +13,6 @@ readonly class Channel
         public bool $isActive,
         public ?string $startAt = null,
         public ?string $endAt = null,
-    )
-    {
+    ) {
     }
 }

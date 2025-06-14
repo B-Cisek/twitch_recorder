@@ -20,22 +20,17 @@ readonly class UpdateChannel
     public function __construct(
         #[Assert\Length(min: 3, max: 255)]
         public ?string $name = null,
-
         #[Assert\Type(type: Platform::class)]
         public ?Platform $platform = null,
-
         #[Assert\Type(type: 'bool')]
         public ?bool $isActive = null,
-
         #[Assert\Type(\DateTimeImmutable::class)]
         #[Assert\GreaterThanOrEqual('today')]
         public ?\DateTimeImmutable $startAt = null,
-
         #[Assert\Type(\DateTimeImmutable::class)]
         #[Assert\GreaterThan(propertyPath: 'startAt')]
         public ?\DateTimeImmutable $endAt = null,
-    )
-    {
+    ) {
     }
 
     public function toCommand(string $id): UpdateChannelCommand

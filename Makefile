@@ -16,7 +16,10 @@ composer:
 	docker-compose exec php composer $(filter-out $@,$(MAKECMDGOALS))
 
 phpstan:
-	docker-compose exec php vendor/bin/phpstan analyse
+	docker-compose exec php tools/vendor/bin/phpstan analyse
+
+format:
+	docker-compose exec php sh -c 'PHP_CS_FIXER_IGNORE_ENV=1 tools/vendor/bin/php-cs-fixer fix src'
 
 test:
 	docker-compose exec php vendor/bin/phpunit tests

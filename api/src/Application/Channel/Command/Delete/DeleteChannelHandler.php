@@ -14,8 +14,7 @@ readonly class DeleteChannelHandler
         private Repository $channelRepository,
         private ChannelProvider $channelProvider,
         private LoggerInterface $logger
-    )
-    {
+    ) {
     }
 
     public function handle(DeleteChannelCommand $command): void

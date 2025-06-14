@@ -14,8 +14,7 @@ readonly class UpdateChannelHandler
         private Repository $channelRepository,
         private ChannelProvider $channelProvider,
         private LoggerInterface $logger
-    )
-    {
+    ) {
     }
 
     public function handle(UpdateChannelCommand $command): void
