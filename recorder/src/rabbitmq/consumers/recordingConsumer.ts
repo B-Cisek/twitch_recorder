@@ -27,9 +27,20 @@ export class RecordingConsumer extends BaseConsumer {
                 platform: data.platform
             })
 
-            const path = new StorageService().prepareRecordingPath(data.recordingId)
             const recorder = new RecordingService()
-            await recorder.start(data.channel, data.platform, path)
+            const path = new StorageService()
+
+            if (recorder.isRecording(data.channel, data.platform)) {
+                await this.reject(message, false)
+                return
+            }
+
+            await recorder.start(
+                data.channel,
+                data.platform,
+                path.prepareRecordingPath(data.recordingId)
+            )
+
             await new RecordingApiHelper().updateRecording(data.recordingId, {
                 status: RecordingStatus.RECORDING,
                 startedAt: new Date().toISOString()
