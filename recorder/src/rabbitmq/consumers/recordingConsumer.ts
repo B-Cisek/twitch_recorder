@@ -1,6 +1,8 @@
-import { ConsumeMessage } from 'amqplib'
+import {Channel, ConsumeMessage} from 'amqplib'
 import {BaseConsumer} from "../baseConsumer";
 import {RabbitMQ_QUEUE_NAME} from "../../config/config";
+import {StorageService} from "../../services/storageService";
+import {RecordingService} from "../../services/recordingService";
 
 interface RecordingMessage {
     recordingId: string
@@ -32,15 +34,12 @@ export class RecordingConsumer extends BaseConsumer {
                 endAt: data.endAt
             })
 
-            // Here you would implement your recording logic
-            // For example:
-            // await this.recordingService.startRecording(data)
-
-            // Acknowledge the message after successful processing
+            const path = new StorageService().prepareRecordingPath(data.recordingId)
+            const recorder = new RecordingService();
+            await recorder.start(data.channel, data.platform, path)
             await this.acknowledge(message)
         } catch (error) {
             console.error('Error processing recording message:', error)
-            // Reject the message if there's an error
             await this.reject(message, false)
         }
     }
