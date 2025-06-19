@@ -1,9 +1,10 @@
 framework:
     messenger:
         transports:
-             async: '%env(MESSENGER_TRANSPORT_DSN)%'
-            # failed: 'doctrine://default?queue_name=failed'
-            # sync: 'sync://'
+             async:
+               dsn: '%env(MESSENGER_TRANSPORT_DSN)%'
+               serializer: messenger.transport.symfony_serializer
+
 
         routing:
             # Route your messages to the transports

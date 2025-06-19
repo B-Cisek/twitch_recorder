@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace App\Infrastructure\Http\Controller;
 
+use App\Application\Channel\Provider\ChannelProvider;
+use App\Application\Recording\Command\Start\StartRecordingCommand;
+use App\Application\Recording\Command\Start\StartRecordingCommandHandler;
 use App\Application\Recording\Command\Stop\StopRecordingCommand;
 use App\Application\Recording\Command\Stop\StopRecordingCommandHandler;
 use App\Application\Recording\Command\Update\UpdateRecordingCommandHandler;
@@ -19,7 +22,8 @@ class RecordingController extends AbstractController
 {
     public function __construct(
         private readonly StopRecordingCommandHandler $stopRecordingCommandHandler,
-        private readonly UpdateRecordingCommandHandler $updateRecordingStatusCommandHandler
+        private readonly UpdateRecordingCommandHandler $updateRecordingStatusCommandHandler,
+        private readonly StartRecordingCommandHandler $startRecordingCommandHandler,
     ) {
     }
 
@@ -37,6 +41,15 @@ class RecordingController extends AbstractController
         #[MapRequestPayload] UpdateRecordingStatus $request
     ): JsonResponse {
         $this->updateRecordingStatusCommandHandler->handle($request->toCommand($id));
+
+        return new JsonResponse(status: Response::HTTP_NO_CONTENT);
+    }
+
+    // TEST ENDPOINT REMOVE
+    #[Route('/start', methods: ['get'])]
+    public function start(ChannelProvider $provider): JsonResponse {
+        $channel = $provider->loadChannel('01974cab-2784-7e50-83d8-37fe1f2a3dcc');
+        $this->startRecordingCommandHandler->handle(new StartRecordingCommand($channel));
 
         return new JsonResponse(status: Response::HTTP_NO_CONTENT);
     }
