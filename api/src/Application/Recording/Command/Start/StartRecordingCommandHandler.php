@@ -25,6 +25,7 @@ readonly class StartRecordingCommandHandler
         $recording = new Recording();
         $recording->setChannel($command->channel);
         $recording->setStatus(RecordingStatus::PENDING);
+
         $this->repository->save($recording);
 
         $this->logger->info('New Recording created', [
@@ -36,8 +37,6 @@ readonly class StartRecordingCommandHandler
             $recording->getId()->toRfc4122(),
             $recording->getChannel()->getName(),
             $recording->getChannel()->getPlatform()->value,
-            $recording->getChannel()->getStartAt()?->format(\DateTimeInterface::ATOM),
-            $recording->getChannel()->getEndAt()?->format(\DateTimeInterface::ATOM),
         ));
 
         $this->logger->info('Start recording message dispatched', [

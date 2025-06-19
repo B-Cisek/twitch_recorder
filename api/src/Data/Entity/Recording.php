@@ -27,7 +27,7 @@ class Recording extends BaseEntity
     private ?DateTimeImmutable $endedAt = null;
 
     #[ORM\Column(type: Types::STRING, nullable: true)]
-    private ?string $filePath = null;
+    private ?string $url = null;
 
     public function getChannel(): Channel
     {
@@ -74,14 +74,14 @@ class Recording extends BaseEntity
         return $this;
     }
 
-    public function getFilePath(): ?string
+    public function getUrl(): ?string
     {
-        return $this->filePath;
+        return $this->url;
     }
 
-    public function setFilePath(?string $filePath): Recording
+    public function setUrl(?string $url): Recording
     {
-        $this->filePath = $filePath;
+        $this->url = $url;
         return $this;
     }
 }

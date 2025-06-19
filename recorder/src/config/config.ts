@@ -5,6 +5,7 @@ dotenv.config()
 export const DEVELOPMENT = process.env.APP_ENV === 'development' || process.env.APP_ENV === 'dev'
 export const HOST = process.env.APP_HOST || 'localhost'
 export const PORT = process.env.APP_PORT || 3000
+export const BACKEND_API_URL = process.env.BACKEND_API_URL || 'http://localhost:8080/api'
 
 export const SERVER = {
     HOST,

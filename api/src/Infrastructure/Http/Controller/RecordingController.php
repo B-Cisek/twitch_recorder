@@ -47,7 +47,8 @@ class RecordingController extends AbstractController
 
     // TEST ENDPOINT REMOVE
     #[Route('/start', methods: ['get'])]
-    public function start(ChannelProvider $provider): JsonResponse {
+    public function start(ChannelProvider $provider): JsonResponse
+    {
         $channel = $provider->loadChannel('1318559d-4fc1-449e-bb0d-bbc303b84ece');
         $this->startRecordingCommandHandler->handle(new StartRecordingCommand($channel));
 

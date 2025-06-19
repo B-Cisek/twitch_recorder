@@ -22,7 +22,7 @@ class UpdateRecordingStatus
     public ?string $endedAt = null;
 
     #[Assert\Length(max: 255)]
-    public ?string $filePath = null;
+    public ?string $url = null;
 
     public function toCommand(string $id): UpdateRecordingCommand
     {
@@ -31,7 +31,7 @@ class UpdateRecordingStatus
             status: $this->status ? RecordingStatus::from($this->status) : null,
             startedAt: $this->startedAt ? DateTimeImmutable::createFromFormat(DateTimeInterface::ATOM, $this->startedAt) : null,
             endedAt: $this->endedAt ? DateTimeImmutable::createFromFormat(DateTimeInterface::ATOM, $this->endedAt) : null,
-            filePath: $this->filePath
+            url: $this->url
         );
     }
 }

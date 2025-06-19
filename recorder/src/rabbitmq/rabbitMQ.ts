@@ -1,4 +1,4 @@
-import amqplib, {Channel, ChannelModel } from 'amqplib'
+import amqplib, { Channel, ChannelModel } from 'amqplib'
 import { RabbitCredentials } from '../config/config'
 
 export class RabbitMQ {

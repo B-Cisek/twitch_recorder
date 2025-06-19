@@ -1,8 +1,8 @@
 import express from 'express'
 import http from 'http'
-import {SERVER} from './config/config'
+import { SERVER } from './config/config'
 import { errorHandler } from './middlewares/errorHandler'
-import {RecordingConsumer} from "./rabbitmq/consumers/recordingConsumer";
+import { RecordingConsumer } from './rabbitmq/consumers/recordingConsumer'
 
 export const app = express()
 export let httpServer: ReturnType<typeof http.createServer>

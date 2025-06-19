@@ -33,8 +33,8 @@ readonly class UpdateRecordingCommandHandler
             $recording->setEndedAt($command->endedAt);
         }
 
-        if ($command->filePath !== null) {
-            $recording->setFilePath($command->filePath);
+        if ($command->url !== null) {
+            $recording->setUrl($command->url);
         }
 
         $this->repository->save($recording);
@@ -44,7 +44,7 @@ readonly class UpdateRecordingCommandHandler
             'status' => $command->status?->value,
             'started_at' => $command->startedAt?->format('Y-m-d H:i:s'),
             'ended_at' => $command->endedAt?->format('Y-m-d H:i:s'),
-            'file_path' => $command->filePath
+            'file_path' => $command->url
         ]);
     }
 }

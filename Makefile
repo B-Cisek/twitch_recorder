@@ -1,4 +1,6 @@
-.PHONY: up down build bash composer
+.PHONY: up down build bash composer phpstan format test prettier
+
+before-commit: phpstan format test prettier
 
 up:
 	docker-compose up -d
@@ -23,3 +25,6 @@ format:
 
 test:
 	docker-compose exec php vendor/bin/phpunit tests
+
+prettier:
+	npm run format -C recorder
