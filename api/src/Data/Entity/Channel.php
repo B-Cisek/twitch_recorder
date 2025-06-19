@@ -29,6 +29,9 @@ class Channel extends BaseEntity
     #[ORM\Column(type: Types::DATETIME_IMMUTABLE, nullable: true)]
     private ?\DateTimeImmutable $endAt = null;
 
+    #[ORM\Column(type: Types::BOOLEAN, options: ['default' => false])]
+    private bool $isCurrentRecording = false;
+
     /** @var Collection<int, Recording> */
     #[ORM\OneToMany(targetEntity: Recording::class, mappedBy: 'channel')]
     private Collection $recordings;
@@ -37,6 +40,17 @@ class Channel extends BaseEntity
     {
         parent::__construct();
         $this->recordings = new ArrayCollection();
+    }
+
+    public function isCurrentRecording(): bool
+    {
+        return $this->isCurrentRecording;
+    }
+
+    public function setCurrentRecording(bool $isCurrentRecording): Channel
+    {
+        $this->isCurrentRecording = $isCurrentRecording;
+        return $this;
     }
 
     public function getName(): string
