@@ -4,7 +4,13 @@ declare(strict_types=1);
 
 namespace App\Infrastructure\Integration\Twitch;
 
+use App\Infrastructure\Exception\UserNotLiveException;
+use App\Infrastructure\Exception\UserNotFoundException;
+use App\Infrastructure\Integration\Twitch\DTO\StreamInfo;
+use App\Infrastructure\Integration\Twitch\DTO\UserInfo;
+use App\Infrastructure\Integration\Twitch\Enum\StreamType;
 use App\Infrastructure\Integration\Twitch\Exception\TwitchApiException;
+use DateTimeImmutable;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Contracts\Cache\CacheInterface;
@@ -103,5 +109,52 @@ class TwitchApiClient implements TwitchApiClientInterface
             ]);
             throw new TwitchApiException('Failed to get access token: ' . $e->getMessage(), 0, $e);
         }
+    }
+
+    public function getUserInfo(string $username): UserInfo
+    {
+        $response = $this->makeRequest('GET', '/users', ['login' => $username]);
+
+        if (empty($response['data'])) {
+            throw new UserNotFoundException($username);
+        }
+
+        return new UserInfo(
+            id: $response['data'][0]['id'],
+            login: $response['data'][0]['login'],
+            displayName: $response['data'][0]['display_name'],
+            type: $response['data'][0]['type'],
+            broadcasterType: $response['data'][0]['broadcaster_type'],
+            description: $response['data'][0]['description'],
+            profileImageUrl: $response['data'][0]['profile_image_url'],
+            offlineImageUrl: $response['data'][0]['offline_image_url'],
+            viewCount: $response['data'][0]['view_count'],
+            createdAt: new DateTimeImmutable($response['data'][0]['created_at']),
+        );
+    }
+
+    public function getStreamInfo(string $username): StreamInfo
+    {
+        $response = $this->makeRequest('GET', '/streams', ['user_login' => $username]);
+
+        if (empty($response['data'])) {
+            throw new UserNotLiveException($username);
+        }
+
+        return new StreamInfo(
+            id: $response['data'][0]['id'],
+            userId: $response['data'][0]['user_id'],
+            userLogin: $response['data'][0]['user_login'],
+            userName: $response['data'][0]['user_name'],
+            gameId: $response['data'][0]['game_id'],
+            gameName: $response['data'][0]['game_name'],
+            type: StreamType::from($response['data'][0]['type']),
+            title: $response['data'][0]['title'],
+            viewerCount: $response['data'][0]['viewer_count'],
+            startedAt: new DateTimeImmutable($response['data'][0]['started_at']),
+            language: $response['data'][0]['language'],
+            thumbnailUrl: $response['data'][0]['thumbnail_url'],
+            isMature: $response['data'][0]['is_mature'],
+        );
     }
 }

@@ -11,6 +11,7 @@ use App\Application\Recording\Command\Stop\StopRecordingCommand;
 use App\Application\Recording\Command\Stop\StopRecordingCommandHandler;
 use App\Application\Recording\Command\Update\UpdateRecordingCommandHandler;
 use App\Infrastructure\Http\Request\Recording\UpdateRecordingStatus;
+use App\Infrastructure\Integration\Twitch\TwitchApiClientInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -53,5 +54,15 @@ class RecordingController extends AbstractController
         $this->startRecordingCommandHandler->handle(new StartRecordingCommand($channel));
 
         return new JsonResponse(status: Response::HTTP_NO_CONTENT);
+    }
+
+    // test to remove
+    #[Route('/test', methods: ['get'])]
+    public function test(TwitchApiClientInterface $twitchApiClient): JsonResponse
+    {
+        $res = $twitchApiClient->getStreamInfo('testree');
+
+
+        return new JsonResponse(status: Response::HTTP_OK);
     }
 }
