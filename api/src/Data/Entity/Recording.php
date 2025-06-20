@@ -26,9 +26,6 @@ class Recording extends BaseEntity
     #[ORM\Column(type: Types::DATETIME_IMMUTABLE, nullable: true)]
     private ?DateTimeImmutable $endedAt = null;
 
-    #[ORM\Column(type: Types::STRING, nullable: true)]
-    private ?string $url = null;
-
     public function getChannel(): Channel
     {
         return $this->channel;
@@ -71,17 +68,6 @@ class Recording extends BaseEntity
     public function setEndedAt(?DateTimeImmutable $endedAt): Recording
     {
         $this->endedAt = $endedAt;
-        return $this;
-    }
-
-    public function getUrl(): ?string
-    {
-        return $this->url;
-    }
-
-    public function setUrl(?string $url): Recording
-    {
-        $this->url = $url;
         return $this;
     }
 }

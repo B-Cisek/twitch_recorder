@@ -14,7 +14,6 @@ readonly class UpdateRecordingCommand
         public ?RecordingStatus $status = null,
         public ?DateTimeImmutable $startedAt = null,
         public ?DateTimeImmutable $endedAt = null,
-        public ?string $url = null
     ) {
     }
 }

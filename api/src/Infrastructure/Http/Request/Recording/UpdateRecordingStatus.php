@@ -7,7 +7,6 @@ namespace App\Infrastructure\Http\Request\Recording;
 use App\Application\Recording\Command\Update\UpdateRecordingCommand;
 use App\Data\Enum\RecordingStatus;
 use DateTimeImmutable;
-use DateTimeInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 
 class UpdateRecordingStatus
@@ -23,9 +22,6 @@ class UpdateRecordingStatus
     #[Assert\DateTime(format: self::DATE_FORMAT)]
     public ?string $endedAt = null;
 
-    #[Assert\Length(max: 255)]
-    public ?string $url = null;
-
     public function toCommand(string $id): UpdateRecordingCommand
     {
         return new UpdateRecordingCommand(
@@ -33,7 +29,6 @@ class UpdateRecordingStatus
             status: $this->status ? RecordingStatus::from($this->status) : null,
             startedAt: $this->startedAt ? DateTimeImmutable::createFromFormat(self::DATE_FORMAT, $this->startedAt) : null,
             endedAt: $this->endedAt ? DateTimeImmutable::createFromFormat(self::DATE_FORMAT, $this->endedAt) : null,
-            url: $this->url
         );
     }
 }
