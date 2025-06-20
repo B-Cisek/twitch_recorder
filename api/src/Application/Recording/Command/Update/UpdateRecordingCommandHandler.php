@@ -33,10 +33,6 @@ readonly class UpdateRecordingCommandHandler
             $recording->setEndedAt($command->endedAt);
         }
 
-        if ($command->url !== null) {
-            $recording->setUrl($command->url);
-        }
-
         $this->repository->save($recording);
 
         $this->logger->info('Recording status updated', [
@@ -44,7 +40,6 @@ readonly class UpdateRecordingCommandHandler
             'status' => $command->status?->value,
             'started_at' => $command->startedAt?->format('Y-m-d H:i:s'),
             'ended_at' => $command->endedAt?->format('Y-m-d H:i:s'),
-            'file_path' => $command->url
         ]);
     }
 }

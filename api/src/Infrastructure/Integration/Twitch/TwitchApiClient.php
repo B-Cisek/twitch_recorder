@@ -22,7 +22,7 @@ class TwitchApiClient implements TwitchApiClientInterface
 {
     private const string BASE_URL = 'https://api.twitch.tv/helix';
     private const string TOKEN_URL = 'https://id.twitch.tv/oauth2/token';
-    private const string TOKEN_KEY = 'TWITCH_TOKEN';
+    private const string TOKEN_KEY = 'twitch_token';
 
     public function __construct(
         private readonly HttpClientInterface $httpClient,
@@ -32,8 +32,7 @@ class TwitchApiClient implements TwitchApiClientInterface
         private readonly string $clientId,
         private readonly string $clientSecret,
         private ?string $accessToken = null
-    )
-    {
+    ) {
         $this->accessToken = $this->cache->get(self::TOKEN_KEY, function (ItemInterface $item) {
             $data = $this->getAccessToken();
             $item->expiresAfter($data['expires_in'] - 10);
@@ -42,6 +41,10 @@ class TwitchApiClient implements TwitchApiClientInterface
         });
     }
 
+    /**
+     * @param array<string, mixed> $params
+     * @return array<string, mixed>
+     */
     private function makeRequest(string $method, string $endpoint, array $params = []): array
     {
         try {

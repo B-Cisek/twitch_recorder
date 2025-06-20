@@ -4,3 +4,8 @@ framework:
             cache.long:
                 adapter: cache.adapter.redis
                 provider: '%env(REDIS_URL)%'
+            cache.entity:
+                adapter: cache.adapter.redis
+                provider: '%env(REDIS_URL)%'
+                default_lifetime: 300
+

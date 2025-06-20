@@ -6,5 +6,4 @@ namespace App\Infrastructure\Integration\Twitch\Exception;
 
 class TwitchApiException extends \Exception
 {
-
 }

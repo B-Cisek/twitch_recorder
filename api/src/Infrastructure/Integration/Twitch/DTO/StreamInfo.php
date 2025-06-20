@@ -23,7 +23,6 @@ readonly class StreamInfo
         public string $language,
         public string $thumbnailUrl,
         public bool $isMature,
-    )
-    {
+    ) {
     }
 }

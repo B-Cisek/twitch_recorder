@@ -7,6 +7,7 @@ namespace App\Application\Twitch\Service;
 use App\Infrastructure\Exception\UserNotFoundException;
 use App\Infrastructure\Integration\Twitch\DTO\StreamInfo;
 use App\Infrastructure\Integration\Twitch\DTO\UserInfo;
+use App\Infrastructure\Integration\Twitch\Enum\StreamType;
 use App\Infrastructure\Integration\Twitch\Exception\TwitchApiException;
 use App\Infrastructure\Integration\Twitch\TwitchApiClientInterface;
 use Psr\Log\LoggerInterface;
@@ -16,8 +17,7 @@ readonly class TwitchService
     public function __construct(
         private TwitchApiClientInterface $twitchApiClient,
         private LoggerInterface $logger
-    )
-    {
+    ) {
     }
 
     public function validateChannel(string $channelName): bool
@@ -61,7 +61,7 @@ readonly class TwitchService
     {
         try {
             $streamInfo = $this->twitchApiClient->getStreamInfo($channelName);
-            return $streamInfo->type === 'live';
+            return $streamInfo->type === StreamType::LIVE;
         } catch (TwitchApiException $e) {
             $this->logger->error('Failed to check if channel is live', [
                 'channel' => $channelName,
