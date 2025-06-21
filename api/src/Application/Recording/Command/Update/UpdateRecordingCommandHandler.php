@@ -4,8 +4,11 @@ declare(strict_types=1);
 
 namespace App\Application\Recording\Command\Update;
 
+use App\Application\Channel\Command\Update\UpdateChannelCommand;
+use App\Application\Channel\Command\Update\UpdateChannelHandler;
 use App\Application\Recording\Provider\RecordingProvider;
 use App\Application\Recording\Repository\Repository;
+use App\Data\Enum\RecordingStatus;
 use Psr\Log\LoggerInterface;
 
 readonly class UpdateRecordingCommandHandler
@@ -13,7 +16,8 @@ readonly class UpdateRecordingCommandHandler
     public function __construct(
         private RecordingProvider $provider,
         private LoggerInterface $logger,
-        private Repository $repository
+        private Repository $repository,
+        private UpdateChannelHandler $updateChannelHandler
     ) {
     }
 
@@ -23,6 +27,11 @@ readonly class UpdateRecordingCommandHandler
 
         if ($command->status !== null) {
             $recording->setStatus($command->status);
+
+            $this->updateChannelHandler->handle(new UpdateChannelCommand(
+                id: $recording->getChannel()->getId()->toString(),
+                isCurrentRecording: $command->status === RecordingStatus::RECORDING
+            ));
         }
 
         if ($command->startedAt !== null) {

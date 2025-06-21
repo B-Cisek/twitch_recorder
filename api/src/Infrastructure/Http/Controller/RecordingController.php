@@ -50,8 +50,7 @@ class RecordingController extends AbstractController
     #[Route('/start', methods: ['get'])]
     public function start(ChannelProvider $provider): JsonResponse
     {
-        $channel = $provider->loadChannel('01974cab-2784-7e50-83d8-37fe1f2a3dcc');
-        $this->startRecordingCommandHandler->handle(new StartRecordingCommand($channel));
+        $this->startRecordingCommandHandler->handle(new StartRecordingCommand('01974cab-2784-7e50-83d8-37fe1f2a3dcc'));
 
         return new JsonResponse(status: Response::HTTP_NO_CONTENT);
     }

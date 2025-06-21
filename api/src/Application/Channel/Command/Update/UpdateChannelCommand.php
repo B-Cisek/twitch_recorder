@@ -10,11 +10,12 @@ readonly class UpdateChannelCommand
 {
     public function __construct(
         public string $id,
-        public ?string $name,
-        public ?Platform $platform,
-        public ?bool $isActive,
-        public ?\DateTimeImmutable $startAt,
-        public ?\DateTimeImmutable $endAt
+        public ?string $name = null,
+        public ?Platform $platform = null,
+        public ?bool $isActive = null,
+        public ?\DateTimeImmutable $startAt = null,
+        public ?\DateTimeImmutable $endAt = null,
+        public ?bool $isCurrentRecording = null,
     ) {
     }
 }

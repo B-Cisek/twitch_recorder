@@ -8,6 +8,7 @@ use App\Application\Channel\Repository\Repository;
 use App\Application\Recording\Command\Start\StartRecordingCommand;
 use App\Application\Recording\Command\Start\StartRecordingCommandHandler;
 use App\Application\Twitch\Service\TwitchService;
+use App\Data\Entity\Channel;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\Scheduler\Attribute\AsCronTask;
@@ -35,12 +36,13 @@ readonly class StartRecording
             return $this->repository->findAll();
         });
 
+        /** @var Channel $channel */
         foreach ($channels as $channel) {
             if (!$channel->isActive() || $channel->isCurrentRecording() || !$this->isLive($channel->getName())) {
                 continue;
             }
 
-            $this->startRecordingCommandHandler->handle(new StartRecordingCommand($channel));
+            $this->startRecordingCommandHandler->handle(new StartRecordingCommand($channel->getId()->toRfc4122()));
 
             $this->logger->info('Start recording for channel', [
                 'id' => $channel->getId()->toRfc4122(),
