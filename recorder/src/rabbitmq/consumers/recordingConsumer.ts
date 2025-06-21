@@ -35,7 +35,12 @@ export class RecordingConsumer extends BaseConsumer {
                 return
             }
 
-            await recorder.start(data.channel, data.platform, path.prepareRecordingPath(data.recordingId))
+            await recorder.start(
+                data.channel,
+                data.platform,
+                path.prepareRecordingPath(data.recordingId),
+                // callbacks for exit/error/...
+            )
 
             await new RecordingApiHelper().updateRecording(data.recordingId, {
                 status: RecordingStatus.RECORDING,
