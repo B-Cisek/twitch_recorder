@@ -22,8 +22,7 @@ readonly class FetchChannelInfoHandler
         private ChannelProvider $channelProvider,
         private Repository $repository,
         private LoggerInterface $logger
-    )
-    {
+    ) {
     }
 
     public function __invoke(FetchChannelInfo $message): void

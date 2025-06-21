@@ -1,6 +1,6 @@
 import amqplib, { Channel, ChannelModel } from 'amqplib'
 import { RabbitCredentials } from '../config/config'
-import {logger} from "../helpers/logger";
+import { logger } from '../helpers/logger'
 
 export class RabbitMQ {
     private static connection: ChannelModel | null = null

@@ -1,12 +1,12 @@
-import {ConsumeMessage} from 'amqplib'
-import {BaseConsumer} from '../baseConsumer'
-import {RabbitMQ_QUEUE_NAME} from '../../config/config'
-import {StorageService} from '../../services/storageService'
-import {RecordingService} from '../../services/recordingService'
-import {RecordingMessage} from '../../types/interfaces'
-import {RecordingApiHelper} from '../../helpers/recordingApiHelper'
-import {RecordingStatus} from '../../types/enums'
-import {logger} from "../../helpers/logger";
+import { ConsumeMessage } from 'amqplib'
+import { BaseConsumer } from '../baseConsumer'
+import { RabbitMQ_QUEUE_NAME } from '../../config/config'
+import { StorageService } from '../../services/storageService'
+import { RecordingService } from '../../services/recordingService'
+import { RecordingMessage } from '../../types/interfaces'
+import { RecordingApiHelper } from '../../helpers/recordingApiHelper'
+import { RecordingStatus } from '../../types/enums'
+import { logger } from '../../helpers/logger'
 
 export class RecordingConsumer extends BaseConsumer {
     private readonly storageService: StorageService
@@ -39,12 +39,15 @@ export class RecordingConsumer extends BaseConsumer {
             await this.processRecording(recordingData)
             await this.acknowledge(message)
         } catch (error) {
-            logger.error({
-                error: error instanceof Error ? error.message : error,
-                recordingId: recordingData.recordingId,
-                channel: recordingData.channel,
-                platform: recordingData.platform
-            }, 'Error processing recording message')
+            logger.error(
+                {
+                    error: error instanceof Error ? error.message : error,
+                    recordingId: recordingData.recordingId,
+                    channel: recordingData.channel,
+                    platform: recordingData.platform
+                },
+                'Error processing recording message'
+            )
             await this.reject(message, true)
         }
     }
@@ -64,11 +67,14 @@ export class RecordingConsumer extends BaseConsumer {
     }
 
     private logReceivedMessage(data: RecordingMessage): void {
-        logger.info({
-            recordingId: data.recordingId,
-            channel: data.channel,
-            platform: data.platform
-        }, 'Received recording message')
+        logger.info(
+            {
+                recordingId: data.recordingId,
+                channel: data.channel,
+                platform: data.platform
+            },
+            'Received recording message'
+        )
     }
 
     private async processRecording(data: RecordingMessage): Promise<void> {
@@ -89,11 +95,7 @@ export class RecordingConsumer extends BaseConsumer {
         return recorder.isRecording(data.channel, data.platform)
     }
 
-    private async startRecording(
-        recorder: RecordingService,
-        data: RecordingMessage,
-        recordingPath: string
-    ): Promise<void> {
+    private async startRecording(recorder: RecordingService, data: RecordingMessage, recordingPath: string): Promise<void> {
         await recorder.start(
             data.channel,
             data.platform,
@@ -102,14 +104,14 @@ export class RecordingConsumer extends BaseConsumer {
                 logger.info(data, `Recording stoped with code: ${code}`)
                 await this.recordingApiHelper.updateRecording(data.recordingId, {
                     status: RecordingStatus.SUCCESS,
-                    endedAt: new Date().toISOString(),
+                    endedAt: new Date().toISOString()
                 })
             },
             async (error) => {
                 logger.error(error, 'Recording failed with error')
                 await this.recordingApiHelper.updateRecording(data.recordingId, {
                     status: RecordingStatus.FAILED,
-                    endedAt: new Date().toISOString(),
+                    endedAt: new Date().toISOString()
                 })
             }
         )

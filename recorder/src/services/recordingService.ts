@@ -1,5 +1,5 @@
 import { spawn, ChildProcessWithoutNullStreams } from 'child_process'
-import {logger} from "../helpers/logger";
+import { logger } from '../helpers/logger'
 
 function getKey(channel: string, platform: string): string {
     return `${platform}:${channel}`

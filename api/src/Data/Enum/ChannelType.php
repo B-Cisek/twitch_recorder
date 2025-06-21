@@ -9,5 +9,5 @@ enum ChannelType: string
     case ADMIN = 'admin';
     case GLOBAL_MOD = 'global_mod';
     case STAFF = 'staff';
-    CASE NORMAL_USER = '';
+    case NORMAL_USER = '';
 }

@@ -14,9 +14,12 @@ class ValidTwitchNameValidator extends ConstraintValidator
     {
     }
 
-    /** @param Constraint<ValidTwitchNameConstraint> $constraint */
     public function validate(mixed $value, Constraint $constraint): void
     {
+        if (!$constraint instanceof ValidTwitchNameConstraint) {
+            throw new \InvalidArgumentException();
+        }
+
         if (!$this->twitchService->validateChannel($value)) {
             $this->context->buildViolation($constraint->message)
                 ->addViolation();

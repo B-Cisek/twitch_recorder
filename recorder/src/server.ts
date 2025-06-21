@@ -5,7 +5,7 @@ import { errorHandler } from './middlewares/errorHandler'
 import { RecordingConsumer } from './rabbitmq/consumers/recordingConsumer'
 import pino from 'pino-http'
 import { logger } from './helpers/logger'
-import {HealthController, VideoController} from "./controllers";
+import { HealthController, VideoController } from './controllers'
 export const app = express()
 export let httpServer: ReturnType<typeof http.createServer>
 

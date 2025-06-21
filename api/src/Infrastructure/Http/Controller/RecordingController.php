@@ -60,9 +60,6 @@ class RecordingController extends AbstractController
     public function test(TwitchApiClientInterface $twitchApiClient, ChannelProvider $provider): JsonResponse
     {
         $res = $twitchApiClient->getUserInfo('delordione');
-        dd($provider->loadChannelByName('delordidasone'));
-
-
         return new JsonResponse(status: Response::HTTP_OK);
     }
 }

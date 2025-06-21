@@ -1,6 +1,6 @@
 import { Channel, ConsumeMessage } from 'amqplib'
 import { RabbitMQ } from './rabbitMQ'
-import {logger} from "../helpers/logger";
+import { logger } from '../helpers/logger'
 
 export abstract class BaseConsumer {
     protected constructor(
