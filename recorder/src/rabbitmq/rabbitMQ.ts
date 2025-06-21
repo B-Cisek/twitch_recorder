@@ -1,5 +1,6 @@
 import amqplib, { Channel, ChannelModel } from 'amqplib'
 import { RabbitCredentials } from '../config/config'
+import {logger} from "../helpers/logger";
 
 export class RabbitMQ {
     private static connection: ChannelModel | null = null
@@ -10,12 +11,12 @@ export class RabbitMQ {
             this.connection = await amqplib.connect(RabbitCredentials.URL)
 
             this.connection.on('error', (err) => {
-                console.error('RabbitMQ connection error:', err)
+                logger.error(err, 'RabbitMQ connection error')
                 this.connection = null
             })
 
             this.connection.on('close', () => {
-                console.log('RabbitMQ connection closed')
+                logger.error('RabbitMQ connection closed')
                 this.connection = null
             })
         }
@@ -29,12 +30,12 @@ export class RabbitMQ {
             this.channel = await connection.createChannel()
 
             this.channel.on('error', (err) => {
-                console.error('RabbitMQ channel error:', err)
+                logger.error(err, 'RabbitMQ channel error')
                 this.channel = null
             })
 
             this.channel.on('close', () => {
-                console.log('RabbitMQ channel closed')
+                logger.info('RabbitMQ channel closed')
                 this.channel = null
             })
         }

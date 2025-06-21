@@ -37,6 +37,10 @@ readonly class UpdateChannelHandler
             $channel->setEndAt($command->endAt);
         }
 
+        if ($command->isCurrentRecording !== null) {
+            $channel->setCurrentRecording($command->isCurrentRecording);
+        }
+
         $this->channelRepository->save($channel);
 
         $this->logger->info('Channel updated', ['id' => $command->id, 'name' => $command->name]);

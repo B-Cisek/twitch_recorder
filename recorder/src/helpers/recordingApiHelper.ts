@@ -25,10 +25,6 @@ export class RecordingApiHelper {
         await this.patchUpdate(id, { endedAt })
     }
 
-    async setUrl(id: string, url: string): Promise<void> {
-        await this.patchUpdate(id, { url })
-    }
-
     async updateRecording(id: string, data: Recording): Promise<void> {
         await this.patchUpdate(id, data)
     }

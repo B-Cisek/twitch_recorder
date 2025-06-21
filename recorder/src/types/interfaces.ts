@@ -10,5 +10,4 @@ export interface Recording {
     status?: RecordingStatus
     startedAt?: string
     endedAt?: string
-    url?: string
 }

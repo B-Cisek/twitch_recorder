@@ -1,5 +1,6 @@
 import { Channel, ConsumeMessage } from 'amqplib'
 import { RabbitMQ } from './rabbitMQ'
+import {logger} from "../helpers/logger";
 
 export abstract class BaseConsumer {
     protected constructor(
@@ -14,20 +15,19 @@ export abstract class BaseConsumer {
             const channel = await RabbitMQ.getChannel()
             await this.setupChannel(channel)
 
-            console.log(`Starting consumer for queue: ${this.queueName}`)
+            logger.info(`Starting consumer for queue: ${this.queueName}`)
             await channel.consume(this.queueName, async (message) => {
                 try {
                     await this.handleMessage(message)
                 } catch (error) {
-                    console.error(`Error processing message:`, error)
-                    // If message exists and wasn't acknowledged, reject it
+                    logger.error(error, `Error processing message`)
                     if (message && channel) {
                         channel.nack(message, false, false)
                     }
                 }
             })
         } catch (error) {
-            console.error(`Failed to start consumer for ${this.queueName}:`, error)
+            logger.error(error, `Failed to start consumer for ${this.queueName}`)
             throw error
         }
     }

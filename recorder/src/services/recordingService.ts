@@ -1,4 +1,5 @@
 import { spawn, ChildProcessWithoutNullStreams } from 'child_process'
+import {logger} from "../helpers/logger";
 
 function getKey(channel: string, platform: string): string {
     return `${platform}:${channel}`
@@ -7,7 +8,13 @@ function getKey(channel: string, platform: string): string {
 export class RecordingService {
     private static processes: Map<string, ChildProcessWithoutNullStreams> = new Map()
 
-    async start(channel: string, platform: string, outputPath: string): Promise<boolean> {
+    async start(
+        channel: string,
+        platform: string,
+        outputPath: string,
+        onExit: (code: number | null, signal: string | null) => Promise<void>,
+        onError: (error: Error) => Promise<void>
+    ): Promise<boolean> {
         const key = getKey(channel, platform)
 
         if (this.isRecording(channel, platform)) {
@@ -19,8 +26,14 @@ export class RecordingService {
 
         RecordingService.processes.set(key, streamlink)
 
-        streamlink.on('exit', () => {
+        streamlink.on('exit', async (code, signal) => {
             RecordingService.processes.delete(key)
+            await onExit(code, signal)
+        })
+
+        streamlink.on('error', async (error) => {
+            RecordingService.processes.delete(key)
+            await onError(error)
         })
 
         return true
@@ -37,7 +50,7 @@ export class RecordingService {
 
     isRecording(channel: string, platform: string): boolean {
         const key = getKey(channel, platform)
-        console.log(RecordingService.processes.has(key))
+        logger.info(`Channel [${channel}] is currently recording: ${RecordingService.processes.has(key)}`)
         return RecordingService.processes.has(key)
     }
 
