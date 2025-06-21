@@ -57,9 +57,10 @@ class RecordingController extends AbstractController
 
     // test to remove
     #[Route('/test', methods: ['get'])]
-    public function test(TwitchApiClientInterface $twitchApiClient): JsonResponse
+    public function test(TwitchApiClientInterface $twitchApiClient, ChannelProvider $provider): JsonResponse
     {
-        $res = $twitchApiClient->getStreamInfo('testree');
+        $res = $twitchApiClient->getUserInfo('delordione');
+        dd($provider->loadChannelByName('delordidasone'));
 
 
         return new JsonResponse(status: Response::HTTP_OK);

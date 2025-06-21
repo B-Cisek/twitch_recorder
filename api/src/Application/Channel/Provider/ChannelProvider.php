@@ -24,4 +24,15 @@ readonly class ChannelProvider
 
         return $channel;
     }
+
+    public function loadChannelByName(string $name): Channel
+    {
+        $channel = $this->queryRepository->findOneBy(['name' => $name]);
+
+        if (null === $channel) {
+            throw new ChannelNotFoundException();
+        }
+
+        return $channel;
+    }
 }

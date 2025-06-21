@@ -6,7 +6,7 @@ namespace App\Application\Recording\Message;
 
 use Symfony\Component\Messenger\Attribute\AsMessage;
 
-#[AsMessage(transport: 'async')]
+#[AsMessage(transport: 'async.recordings')]
 readonly class StopRecording
 {
     public function __construct(public string $recordingId)

@@ -17,7 +17,7 @@ readonly class UserInfo
         public string $description,
         public string $profileImageUrl,
         public string $offlineImageUrl,
-        public string $viewCount,
+        public int $viewCount,
         public DateTimeImmutable $createdAt,
     ) {
     }

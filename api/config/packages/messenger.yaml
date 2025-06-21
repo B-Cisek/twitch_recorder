@@ -1,9 +1,20 @@
 framework:
     messenger:
         transports:
+             async.recordings:
+               dsn: '%env(MESSENGER_TRANSPORT_DSN)%'
+               serializer: messenger.transport.symfony_serializer
+               options:
+                 queues:
+                   recordings: ~
              async:
                dsn: '%env(MESSENGER_TRANSPORT_DSN)%'
                serializer: messenger.transport.symfony_serializer
+               options:
+                 queues:
+                   messages: ~
+
+
 
 
         routing:

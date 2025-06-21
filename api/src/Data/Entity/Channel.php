@@ -36,6 +36,10 @@ class Channel extends BaseEntity
     #[ORM\OneToMany(targetEntity: Recording::class, mappedBy: 'channel')]
     private Collection $recordings;
 
+    #[ORM\OneToOne(targetEntity: ChannelInfo::class, cascade: ['persist', 'remove'])]
+    #[ORM\JoinColumn(nullable: true)]
+    private ?ChannelInfo $channelInfo = null;
+
     public function __construct()
     {
         parent::__construct();
@@ -121,6 +125,17 @@ class Channel extends BaseEntity
             $recording->setChannel($this);
         }
 
+        return $this;
+    }
+
+    public function getChannelInfo(): ?ChannelInfo
+    {
+        return $this->channelInfo;
+    }
+
+    public function setChannelInfo(ChannelInfo $channelInfo): Channel
+    {
+        $this->channelInfo = $channelInfo;
         return $this;
     }
 }
